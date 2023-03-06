@@ -105,6 +105,10 @@
   height: 40px;
 }
 
+.chat-message-avatar.ppp-message {
+  background: #0da37f;
+}
+
 .chat-message-content {
 
 }
