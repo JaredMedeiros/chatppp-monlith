@@ -1,37 +1,61 @@
-const { Configuration, OpenAIApi } = require( "openai");
-const express = require('express')
-const bodyParser = require('body-parser')
-const cors = require('cors')
+// Import the OpenAI API client library and the express library
+const { Configuration, OpenAIApi } = require("openai");
+const express = require("express");
 
+// Import the body-parser and cors libraries for handling request bodies and CORS
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
-
-
+// Set up a configuration object with the organization ID and API key for the OpenAI API
 const configuration = new Configuration({
-    organization: "org-PjMrGQ5CV5Wv4yazLkkICyNT",
-    apiKey: process.env.OPENAI_API_KEY,
+  organization: "org-mJT0yz20wmNyMKTEZ9cvWnMh",
+  apiKey: "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",
 });
 
+// Create an OpenAI API instance using the configuration object
 const openai = new OpenAIApi(configuration);
 
-const app = express()
-app.use(bodyParser.json())
-app.use(cors())
+// Create an express app instance
+const app = express();
 
-const port = 3500
+// Use the body-parser and cors middleware for handling request bodies and CORS
+app.use(bodyParser.json());
+app.use(cors());
 
-app.post( '/', async (req, res) => {
-    const { message } = req.body;
-    const response = await openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: `${message}`,
-        max_tokens: 100,
-        temperature: 0.5,
-    });
-    res.json({
-        message: response.data.choices[0].text,
-    })
+// Specify the port for the express server to listen on
+const port = 3080;
+
+// Define a route for the root path that listens for POST requests
+app.post("/", async (req, res) => {
+  // When a request is received, create a text completion request using the OpenAI API
+  const { message, currentModel } = req.body;
+  console.log(message);
+  const response = await openai.createCompletion({
+    model: `${currentModel}`,
+    prompt: `${message}`,
+    max_tokens: 100,
+    temperature: 0.5,
+  });
+
+  // Send the response data back to the client in JSON format
+  res.json({
+    // data: response.data,
+    message: response.data.choices[0].text,
+  });
 });
 
+// Define a route for the /models path that listens for GET requests
+app.get("/models", async (req, res) => {
+  // When a request is received, get a list of available models using the OpenAI API
+  const response = await openai.listEngines();
+
+  // Send the response data (a list of models) back to the client in JSON format
+  res.json({
+    models: response.data,
+  });
+});
+
+// Start the express server and log a message to the console when it is ready to accept requests
 app.listen(port, () => {
-    console.log(`listening at http://localhost:${port}`)
-})
+  console.log(`Example app listening at http://localhost:${port}`);
+});
