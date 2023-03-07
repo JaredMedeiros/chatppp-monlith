@@ -1,0 +1,140 @@
+.App {
+  text-align: center;
+  display: flex;
+  background-color: #282c34;
+  color: white;
+  position: absolute;
+  top: 0; bottom:0; left:0;
+  width: 100%;
+}
+
+.sidemenu {
+  width: 240px;
+  padding: 10px;
+  border: 1px solid white;
+  background-color: #202123;
+
+  &_button {
+    padding:12px;
+    border: 1px solid white;
+    border-radius: 5px;
+    text-align: left;
+    transition:ease 0.25s linear;
+  
+    :hover {
+      background-color: rgba(255,255,255,0.1);
+    }
+
+    span {
+      padding-left: 6px; padding-right: 12px;
+    }
+  } 
+}
+ 
+.Models {
+  display: flex;
+  align-items: center;
+  margin-top: 24px;
+  width: 100%;
+}
+
+.Models select {
+  background-color: #40414f;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  padding: 12px;
+  font-size: 1.2rem;
+  width: 100%;
+}
+
+.Models option {
+  background-color: #202123;
+}
+
+.chat {
+  flex: 1;
+  border: 1px solid white;
+  background-color: #343541;
+  position: relative;
+
+  &_log {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    height: 80%;
+    width: 100%;
+    margin-bottom: 3rem;
+    margin-top: 3rem;
+  }
+}
+
+.chatMessage {
+  width: 100%;
+  padding-left: 1rem;
+  padding-top: .5rem;
+  font-size: .8rem;
+
+  &_center {
+    max-width: 640px;
+    margin-left: 2rem; margin-right: auto;
+    display: flex;
+    padding: 12px;
+    padding-left: 24px; padding-right: 24px;
+    
+  }
+  
+  &_avatar {
+    background-color: rgb(0, 0, 0);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+
+    &.chatMessage-ppp {
+      background-color: #0da37f;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  &-ppp {
+    background-color: rgba(255, 255, 255, 0.029);
+    width: 100%;
+  } 
+}
+
+.chatInput {
+
+  &_holder {
+    padding: 24px;
+    position: absolute;
+    bottom:0; left:0; right:0;
+    width: 90%;
+  }
+  
+  &_textarea {
+    background-color: #40414f;
+    color: white;
+    font-size: 1.25rem;
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    border: none;
+    margin: 12px;
+    outline: none;
+    box-shadow: 0 2px 0 0 rgba(0,0,0, 0.25)
+  }
+}
+
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: #7b7676;
+  margin: 10px;
+  padding: 3px;
+}

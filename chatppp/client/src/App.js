@@ -1,7 +1,7 @@
 
 
 import "./normalize.css";
-import "./App.css";
+import "./App.scss";
 import { useState, useEffect } from "react";
 // Import the normalize.css and App.css files for styling the UI
 // Import the useState and useEffect hooks from the React library
@@ -75,7 +75,7 @@ function App() {
   return (
     <div className="App">
       <aside className="sidemenu">
-        <div className="sidemenu-button" onClick={clearChatLog}>
+        <div className="sidemenu_button" onClick={clearChatLog}>
           <span>+</span>
           New Chat
         </div>
@@ -91,20 +91,20 @@ function App() {
           </select>
         </div>
       </aside>
-      <section className="chatbox">
-        <div className="chat-log">
+      <section className="chat">
+        <div className="chat_log">
           {chatLog.map((message, index) => (
             <ChatMessage key={index} message={message} />
           ))}
         </div>
 
-        <div className="chat-input-holder">
+        <div className="chatInput_holder">
           <form onSubmit={handleSubmit}>
             <input
               rows="1"
               value={input}
               onChange={(e) => setInput(e.target.value)} //diff
-              className="chat-input-textarea"
+              className="chatInput_textarea"
             ></input>
           </form>
         </div>
@@ -115,10 +115,14 @@ function App() {
 
 // Define a functional component to render a chat message
 const ChatMessage = ({ message }) => {
+
+  //This ensures that any sentence typed in input, is displayed with the first letter capitalized
+  const messageRefined = message.message.charAt(0).toUpperCase() + message.message.slice(1)
+
   return (
-    <div className={`chat-message ${message.user === "gpt" && "ppp-message"}`}>
-      <div className="chat-message-center">
-        <div className={`chat-message-avatar ${message.user === "gpt" && "ppp-message"}`}>
+    <div className={`chatMessage ${message.user === "gpt" && "chatMessage-ppp"}`}>
+      <div className="chatMessage_center">
+        <div className={`chatMessage_avatar ${message.user === "gpt" && "chatMessage-ppp"}`}>
           {message.user === "gpt" && (
             <svg
               transform="scale(0.8)"
@@ -136,7 +140,7 @@ const ChatMessage = ({ message }) => {
             </svg>
           )}
         </div>
-        <div className="chat-message">{message.message}</div>
+        <div className="chatMessage">{messageRefined}</div>
       </div>
     </div>
   );
