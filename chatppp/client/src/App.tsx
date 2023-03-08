@@ -2,22 +2,12 @@ import React from 'react'
 import "./normalize.css";
 import "./App.scss";
 import { useState, useEffect } from "react";
-// Import the normalize.css and App.css files for styling the UI
-// Import the useState and useEffect hooks from the React library
-
-/**
- * TODO: add awesomefont font to search bar <span>+</span>
- * TODO: add welcome message to chat log
- * TODO: add text to speech
- */
 
 export const App: React.FC = () => {
-  // The useEffect hook is used to call the getModels function once when the app loads
   useEffect(() => {
     getModels();
   }, []);
 
-  // Declare state variables for input, models, current model, and chat log
   const [input, setInput] = useState("");
   const [models, setModels] = useState([]);
   const [currentModel, setCurrentModel] = useState("text-davinci-003");
@@ -28,33 +18,24 @@ export const App: React.FC = () => {
     },
   ]);
 
-  // function to clear the chat log
   const clearChatLog = () => {
     setChatLog([]);
   };
 
-  // function to fetch the list of available models from the local server
   function getModels() {
     fetch("http://localhost:3080/models")
       .then((response) => response.json())
       .then((data) => setModels(data.models.data));
   }
 
-  // Define a function to handle the form submission
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    // Prevent the default form submission behavior
     e.preventDefault();
 
-    // Add the user's input to the chat log
     let chatLogNew = [...chatLog, { user: "me", message: `${input}` }];
-    // Clear the input field
     setInput("");
-    // Update the chat log state
     setChatLog(chatLogNew);
 
-    // Map the chat log array to a string with newline separators
     const messages = chatLogNew.map((message) => message.message).join("\n");
-    // Send a POST request to the local server with the chat log and the current model
     const response = await fetch("http://localhost:3080", {
       method: "POST",
       headers: {
@@ -66,7 +47,6 @@ export const App: React.FC = () => {
       }),
     });
 
-    // Update the chat log with the response from the server
     const data = await response.json();
     setChatLog([...chatLogNew, { user: "gpt", message: `${data.message}` }]);
   }
@@ -101,7 +81,7 @@ export const App: React.FC = () => {
           <form onSubmit={handleSubmit}>
             <input
               value={input}
-              onChange={(e) => setInput(e.target.value)} //diff
+              onChange={(e) => setInput(e.target.value)} 
               className="chatInput_textarea"
             ></input>
           </form>
@@ -111,10 +91,7 @@ export const App: React.FC = () => {
   );
 }
 
-// Define a functional component to render a chat message
 const ChatMessage = ({ message } : {message:any}) => {
-
-  //This ensures that any sentence typed in input, is displayed with the first letter capitalized
   const messageRefined = message.message.charAt(0).toUpperCase() + message.message.slice(1)
 
   return (
